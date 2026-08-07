@@ -1,13 +1,7 @@
-import'./App.css'
-import globe3D from './components/Hero'
+import "./App.css";
+import Hero from "./components/Hero";
 function App() {
-
-  return (
-    
-    <globe3D />
-
-    
-  )
+  return <Hero />;
 }
 
-export default app
+export default App;

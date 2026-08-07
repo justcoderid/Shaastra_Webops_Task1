@@ -1,23 +1,27 @@
-import type { MouseEvent } from 'react';
-import { Link } from 'react-router-dom';
-import { motion, useMotionTemplate, useMotionValue } from 'framer-motion';
-import { cn } from '../lib/utils';
-import { ShoppingCart, Compass } from 'lucide-react';
-import header1 from './ui/header-1';
-import footer4Col from './ui/footer-4col';
+import type { MouseEvent } from "react";
+import { Link } from "react-router-dom";
+import { motion, useMotionTemplate, useMotionValue } from "framer-motion";
+import { cn } from "../lib/utils";
+import { ShoppingCart, Compass } from "lucide-react";
+import Header1 from "./ui/header-1";
+import Footer4Col from "./ui/footer-4col";
 
 export default function Hero() {
   const mouseX = useMotionValue(0);
   const mouseY = useMotionValue(0);
 
-  function handleMouseMove({ currentTarget, clientX, clientY }: MouseEvent<HTMLDivElement>) {
+  function handleMouseMove({
+    currentTarget,
+    clientX,
+    clientY,
+  }: MouseEvent<HTMLDivElement>) {
     const { left, top } = currentTarget.getBoundingClientRect();
     mouseX.set(clientX - left);
     mouseY.set(clientY - top);
   }
 
   return (
-    <div 
+    <div
       className="relative min-h-screen w-full bg-gradient-to-br from-indigo-50 via-white to-emerald-50 dark:from-zinc-950 dark:via-zinc-900 dark:to-emerald-950 font-sans text-zinc-900 dark:text-zinc-50 antialiased overflow-x-hidden group"
       onMouseMove={handleMouseMove}
     >
@@ -33,7 +37,7 @@ export default function Hero() {
           `,
         }}
       />
-      <header1 />
+      <Header1 />
       <section className="relative w-full pt-32 pb-16 md:pt-40 md:pb-20 z-10">
         <div className="absolute top-0 right-0 h-full w-1/2 bg-[radial-gradient(circle_at_70%_30%,_rgba(16,185,129,0.1)_0%,_transparent_60%)] dark:bg-[radial-gradient(circle_at_70%_30%,_rgba(16,185,129,0.15)_0%,_transparent_60%)] pointer-events-none" />
         <div className="absolute top-0 left-0 h-full w-1/2 -scale-x-100 bg-[radial-gradient(circle_at_70%_30%,_rgba(99,102,241,0.1)_0%,_transparent_60%)] dark:bg-[radial-gradient(circle_at_70%_30%,_rgba(99,102,241,0.15)_0%,_transparent_60%)] pointer-events-none" />
@@ -42,7 +46,7 @@ export default function Hero() {
           <motion.div
             initial={{ opacity: 0, y: 30 }}
             animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.8, ease: 'easeOut' }}
+            transition={{ duration: 0.8, ease: "easeOut" }}
           >
             <span className="mb-6 inline-block rounded-full border border-zinc-200 dark:border-zinc-800 bg-zinc-50 dark:bg-zinc-900 px-4 py-1.5 text-xs font-medium text-zinc-600 dark:text-zinc-300">
               The platform for modern commerce
@@ -54,7 +58,9 @@ export default function Hero() {
               </span>
             </h1>
             <p className="mx-auto mb-10 max-w-2xl text-lg text-zinc-600 dark:text-zinc-400 md:text-xl leading-relaxed">
-              VergeStore provides powerful tools, beautiful templates, and everything you need to start, grow, and manage your online store with ease.
+              VergeStore provides powerful tools, beautiful templates, and
+              everything you need to start, grow, and manage your online store
+              with ease.
             </p>
 
             <div className="mb-12 flex flex-col items-center justify-center gap-4 sm:flex-row">
@@ -68,7 +74,7 @@ export default function Hero() {
               <Link
                 to="/cart"
                 className={cn(
-                  "flex items-center gap-2 rounded-full px-8 py-3.5 text-base font-semibold shadow-sm transition-all duration-300 hover:scale-105 active:scale-95 sm:w-auto backdrop-blur-md bg-white/30 dark:bg-black/30 border border-white/40 dark:border-white/10 text-zinc-800 dark:text-zinc-200 hover:bg-white/50 dark:hover:bg-white/10"
+                  "flex items-center gap-2 rounded-full px-8 py-3.5 text-base font-semibold shadow-sm transition-all duration-300 hover:scale-105 active:scale-95 sm:w-auto backdrop-blur-md bg-white/30 dark:bg-black/30 border border-white/40 dark:border-white/10 text-zinc-800 dark:text-zinc-200 hover:bg-white/50 dark:hover:bg-white/10",
                 )}
               >
                 <ShoppingCart className="h-5 w-5" />
@@ -80,7 +86,7 @@ export default function Hero() {
             className="relative mt-16"
             initial={{ opacity: 0, y: 40 }}
             animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 1, ease: 'easeOut', delay: 0.2 }}
+            transition={{ duration: 1, ease: "easeOut", delay: 0.2 }}
           >
             <div className="relative z-10 mx-auto max-w-5xl overflow-hidden rounded-2xl border border-zinc-200/50 bg-white/50 dark:border-zinc-800/50 dark:bg-zinc-900/50 p-2 shadow-2xl backdrop-blur-sm">
               <img
@@ -97,7 +103,7 @@ export default function Hero() {
         </div>
       </section>
       <div className="relative z-10">
-        <footer4Col />
+        <Footer4Col />
       </div>
     </div>
   );
