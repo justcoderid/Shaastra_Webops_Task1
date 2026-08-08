@@ -1,8 +1,7 @@
 import { useContext, useState, type MouseEvent } from "react";
-import { Link, useNavigate } from "react-router-dom";
+import {useNavigate } from "react-router-dom";
 import { motion, useMotionTemplate, useMotionValue } from "framer-motion";
-import { cn } from "../lib/utils";
-import { ShoppingCart, Compass, ShoppingBag } from "lucide-react";
+import {  ShoppingBag } from "lucide-react";
 import Header1 from "./ui/header-1";
 import { AuthContext } from "../context/AuthContext";
 
@@ -12,7 +11,7 @@ export default function Login() {
   const navigate = useNavigate();
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
-  const { isLoggedIn, authenticateUser } = useContext(AuthContext);
+  const { authenticateUser } = useContext(AuthContext);
   function handleLogin(e: React.FormEvent<HTMLFormElement>) {
     e.preventDefault();
     alert(`Logged in as ${username}`);

@@ -5,7 +5,6 @@ import { Link } from "react-router-dom";
 import { useTheme } from "next-themes";
 import { cx } from "class-variance-authority";
 import { AuthContext } from "../../context/AuthContext";
-import { button } from "framer-motion/client";
 import { CartContext } from "../../context/CartContext";
 
 export default function Header1() {

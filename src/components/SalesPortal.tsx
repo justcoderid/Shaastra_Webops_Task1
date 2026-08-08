@@ -10,7 +10,7 @@ export default function Portal() {
   const mouseX = useMotionValue(0);
   const mouseY = useMotionValue(0);
   const [addedId, setAddedId] = useState<number | null>(null);
-  const { addItem, removeItem } = useContext(CartContext);
+  const { addItem} = useContext(CartContext);
   function handleMouseMove({
     currentTarget,
     clientX,

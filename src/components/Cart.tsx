@@ -5,7 +5,7 @@ import { getProductById } from "../data/products";
 import Header1 from "./ui/header-1";
 import Footer4Col from "./ui/footer-4col";
 import { CartContext } from "../context/CartContext";
-import { Compass, Delete, Trash } from "lucide-react";
+import { Compass, Trash } from "lucide-react";
 import { cn } from "../lib/utils";
 
 export default function Cart() {
