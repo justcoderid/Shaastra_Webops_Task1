@@ -38,7 +38,7 @@ const data = {
     name: 'VergeStore',
     description:
       'The global commerce platform that lets you start, grow, and manage a business. Experience the best in online retail.',
-    logo: 'https://images.unsplash.com/photo-1599305445671-ac291c95aaa9?w=100&h=100&fit=crop',
+    logo: 'https://img.icons8.com/?size=100&id=BYtpfgQsgr4C&format=png&color=000000',
   },
 };
 
