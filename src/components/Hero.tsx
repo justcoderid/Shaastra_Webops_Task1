@@ -1,11 +1,9 @@
-import { useContext, type MouseEvent } from "react";
+import { type MouseEvent } from "react";
 import { Link } from "react-router-dom";
 import { motion, useMotionTemplate, useMotionValue } from "framer-motion";
-import { cn } from "../lib/utils";
-import { ShoppingCart, Compass } from "lucide-react";
+import {Compass } from "lucide-react";
 import Header1 from "./ui/header-1";
 import Footer4Col from "./ui/footer-4col";
-import { AuthContext } from "../context/AuthContext";
 
 export default function Hero() {
   const mouseX = useMotionValue(0);
