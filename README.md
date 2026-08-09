@@ -22,16 +22,17 @@ VergeStore is a modern, high-performance e-commerce platform built with React, T
 ## Getting Started
 
 1. **Install dependencies:**
+
    ```bash
    npm install
    ```
 
 2. **Run the development server:**
+
    ```bash
    npm run dev
    ```
 
 3. Open `http://localhost:5173` to view it in the browser.
 
-4. Open deployed app `https://shaastra-webops-task1-irsvz8w14-my-team-06c9.vercel.app/` to view app
-
+4. Open deployed app `https://shaastra-webops-task1-54o1qcsf2-my-team-06c9.vercel.app/` to view app
