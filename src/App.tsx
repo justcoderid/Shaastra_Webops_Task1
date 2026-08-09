@@ -22,6 +22,7 @@ function App() {
   }
   function logoutUser() {
     setIsLoggedIn(false);
+    console.log("logged out");
     alert("You have been logged out.");
   }
   function addItemToCart(productId: number) {

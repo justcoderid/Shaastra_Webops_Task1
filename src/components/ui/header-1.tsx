@@ -2,22 +2,23 @@ import { useState, useEffect, useContext } from "react"; //this is a hint for yo
 import { motion } from "framer-motion";
 import { ShoppingBag, ShoppingCart } from "lucide-react";
 import { Link } from "react-router-dom";
-import { useTheme } from "next-themes";
 import { cx } from "class-variance-authority";
 import { AuthContext } from "../../context/AuthContext";
 import { CartContext } from "../../context/CartContext";
 
 export default function Header1() {
-  let isScrolled: boolean = false; //learn to read the code(error can be easily found if u see the logic behind something which seems correct)
-  const { theme } = useTheme();
+  //learn to read the code(error can be easily found if u see the logic behind something which seems correct)
   const [hovered, setHovered] = useState(false);
   const { username, isLoggedIn, logoutUser } = useContext(AuthContext);
+  const [isScrolled, setIsScrolled] = useState(false);
   const { items } = useContext(CartContext);
+  const [isTouch, setIsTouch] = useState(false);
+  useEffect(() => {
+    setIsTouch("ontouchstart" in window);
+  }, []);
   useEffect(() => {
     const handleScroll = () => {
-      if (window.scrollY > 20) {
-        isScrolled = true;
-      }
+      setIsScrolled(window.scrollY > 20);
     };
     window.addEventListener("scroll", handleScroll);
     return () => window.removeEventListener("scroll", handleScroll);
@@ -28,8 +29,6 @@ export default function Header1() {
     animate: { y: 0, opacity: 1 },
     scrolled: {
       backdropFilter: "blur(12px)",
-      backgroundColor:
-        theme === "dark" ? "rgba(0, 0, 0, 0.7)" : "rgba(255, 255, 255, 0.9)",
       boxShadow: "0 4px 24px rgba(0, 0, 0, 0.05)",
     },
   };
@@ -48,7 +47,7 @@ export default function Header1() {
       <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
         <div className="flex h-16 items-center justify-between lg:h-20">
           <motion.div
-            className="flex items-center space-x-2"
+            className="flex items-center space-x-2 sm:space-x-3"
             whileHover={{ scale: 1.02 }}
             transition={{ type: "spring", stiffness: 400, damping: 10 }}
           >
@@ -56,7 +55,7 @@ export default function Header1() {
               <div className="flex h-8 w-8 items-center justify-center rounded bg-black dark:bg-white text-white dark:text-black">
                 <ShoppingBag className="h-5 w-5" />
               </div>
-              <span className="text-xl font-bold tracking-tight text-gray-900 dark:text-white">
+              <span className="text-lg font-bold sm:text-xl tracking-tight text-gray-900 dark:text-white">
                 VergeStore
               </span>
             </Link>
@@ -75,30 +74,31 @@ export default function Header1() {
               <Link
                 to="/cart"
                 className="
-    relative flex items-center gap-2
-    rounded-full
-    cursor-pointer
-    bg-white/20
-    backdrop-blur-md
-    px-7 py-3
-    text-base font-medium text-slate-700
-    shadow-sm
-    transition-all duration-300
-    hover:bg-white/60
-    hover:shadow-md
-  "
+                text-sm font-semibold text-gray-700 dark:text-gray-200 dark:hover:text-grey-100 
+                relative flex items-center gap-2
+                rounded-full
+                cursor-pointer
+                bg-white/20
+                backdrop-blur-md
+                px-4 py-3
+                text-base font-medium
+                shadow-sm
+                transition-all duration-300
+                dark:bg-black/20
+                hover:px-6
+                hover:gap-3
+                hover:shadow-md"
               >
                 <ShoppingCart size={20} strokeWidth={1.8} />
 
-                <span>Cart</span>
+                <span className="hidden sm:inline">Cart</span>
                 <span
                   className="
-      absolute -right-1 -top-1
-      flex h-5 w-5 items-center justify-center
-      rounded-full
-      bg-indigo-500
-      text-xs font-semibold text-white
-    "
+                  absolute -right-1 -top-1
+                  flex h-5 w-5 items-center justify-center
+                  rounded-full
+                  bg-indigo-500
+                  text-xs font-semibold text-white"
                 >
                   {items.reduce((total, item) => total + item.quantity, 0)}
                 </span>
@@ -106,25 +106,31 @@ export default function Header1() {
               <motion.div
                 onMouseEnter={() => setHovered(true)}
                 onMouseLeave={() => setHovered(false)}
+                onClick={() => {
+                  if (isTouch) {
+                    logoutUser();
+                    setHovered(true);
+                  }
+                }}
                 animate={{
-                  width: hovered ? 112 : 140,
+                  width: hovered ? 112 : 100,
                 }}
                 transition={{
                   duration: 0.25,
                   ease: "easeInOut",
                 }}
                 className="
-    h-10
-    cursor-pointer
-    flex items-center justify-center
-    rounded-full
-    px-5
-    backdrop-blur-md
-    bg-white/20
-    dark:bg-black/20
-    shadow-[0_4px_12px_rgba(0,0,0,0.05)]
-    overflow-hidden
-  "
+                h-10
+                cursor-pointer
+                flex items-center justify-center
+                rounded-full
+                px-3 sm:px-5
+                backdrop-blur-md
+                bg-white/20
+                dark:bg-black/20
+                shadow-[0_4px_12px_rgba(0,0,0,0.05)]
+                overflow-hidden
+"
               >
                 {hovered ? (
                   <motion.button
@@ -165,7 +171,7 @@ export default function Header1() {
                       <circle cx="12" cy="7" r="4" />
                     </svg>
 
-                    <span className="text-sm font-semibold text-gray-700 dark:text-gray-200">
+                    <span className="max-w-[80px] truncate text-sm font-semibold text-gray-700 dark:text-gray-200 sm:max-w-none">
                       {username}
                     </span>
                   </motion.div>

@@ -61,7 +61,7 @@ export default function Portal() {
           >
             <div className="flex flex-col mx-auto max-w-2xl px-2 py-1 sm:px-3 sm:py-2 lg:max-w-7xl lg:px-8">
               <div className="mb-10">
-                <h2 className="text-4xl font-bold tracking-tight text-slate-900">
+                <h2 className="text-4xl font-bold tracking-tight text-slate-900 dark:text-slate-50 sm:text-5xl lg:text-6xl">
                   Find Your Everyday{" "}
                   <span className="text-indigo-500">Essentials</span>
                 </h2>
@@ -74,7 +74,7 @@ export default function Portal() {
 
               <div className="mt-6 grid grid-cols-1 gap-x-6 gap-y-10 sm:grid-cols-2 lg:grid-cols-4 xl:gap-x-8">
                 {products.map((product) => (
-                  <div className="group relative flex flex-col overflow-hidden rounded-lg border border-gray-200 bg-white/10 shadow-sm backdrop-blur-md hover:shadow-lg transition-shadow duration-300 p-4">
+                  <div className="group relative flex flex-col overflow-hidden rounded-lg bg-white/10 shadow-sm backdrop-blur-md hover:shadow-lg transition-shadow duration-300 p-4">
                     <img
                       src={product.image}
                       alt={`Front of men's ${product.name} in ${product.color}.`}
@@ -82,14 +82,14 @@ export default function Portal() {
                     />
                     <div className="mt-4 flex justify-between">
                       <div>
-                        <h3 className="text-sm text-gray-700">
+                        <h3 className="text-sm text-gray-700 dark:text-gray-200 truncate max-w-[100px] sm:max-w-[150px] md:max-w-[200px] lg:max-w-[250px]">
                           {product.name}
                         </h3>
-                        <p className="mt-3 mr-5 text-sm text-gray-500">
+                        <p className="mt-3 mr-5 text-sm text-gray-500 dark:text-gray-400  truncate  max-w-[100px] sm:max-w-[150px] md:max-w-[200px] lg:max-w-[250px]">
                           {product.color}
                         </p>
                       </div>
-                      <p className="text-sm text-right font-medium text-gray-900">
+                      <p className="text-sm text-right font-medium text-gray-900  dark:text-gray-100  truncate  max-w-[100px] sm:max-w-[150px] md:max-w-[200px] lg:max-w-[250px]">
                         ${product.price}
                       </p>
                     </div>
@@ -101,7 +101,7 @@ export default function Portal() {
                         }, 1500);
                         setAddedId(product.id);
                       }}
-                      className="mt-5 rounded-full bg-indigo-400/80 text-white dark:text-emerald-400 dark:bg-emerald-500/20 dark:hover:bg-emerald-500/30 hover:bg-emerald-500/30 hover:text-black cursor-pointer transition-colors duration-300 px-4 py-2 flex items-center justify-center gap-2 text-sm font-semibold"
+                      className="mt-5 rounded-full bg-indigo-400/80 text-white dark:hover:bg-emerald-500/30 hover:bg-emerald-500/30 hover:text-black dark:hover:text-white cursor-pointer transition-colors duration-300 px-4 py-2 flex items-center justify-center gap-2 text-sm font-semibold"
                     >
                       {addedId === product.id ? (
                         <>

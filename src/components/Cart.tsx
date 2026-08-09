@@ -73,27 +73,32 @@ export default function Cart() {
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.8, ease: "easeOut" }}
           >
-            <section className="md:py-16 group relative flex flex-col overflow-hidden rounded-lg border border-gray-200 bg-white/10 shadow-sm backdrop-blur-md hover:shadow-lg transition-shadow duration-300 antialiased dark:bg-gray-900 md:py-16">
+            <section className="md:py-16 group relative flex flex-col overflow-hidden rounded-lg bg-white/10 shadow-sm backdrop-blur-md hover:shadow-lg transition-shadow duration-300 antialiased dark:bg-gray-900 md:py-16">
               <div className="mx-auto max-w-screen-xl 2xl:pr-20">
-                <h1
-                  className={cn(
-                    cartItems.length > 0 ? " " : " ml-29",
-                    "text-4xl text-left font-bold tracking-tight text-gray-900 dark:text-white",
+                <div className="flex items-center justify-between gap-3 mt-4">
+                  {cartItems.length > 0 && (
+                    <h1
+                      className={cn(
+                        cartItems.length > 0 ? " " : " ml-29",
+                        "text-4xl text-left font-bold tracking-tight text-gray-900 dark:text-white",
+                      )}
+                    >
+                      Your{" "}
+                      <span className="text-transparent bg-clip-text bg-gradient-to-r from-indigo-600 to-slate-500 dark:from-indigo-400 dark:to-teal-300">
+                        Cart
+                      </span>
+                    </h1>
                   )}
-                >
-                  Your{" "}
-                  <span className="text-transparent bg-clip-text bg-gradient-to-r from-indigo-600 to-slate-500 dark:from-indigo-400 dark:to-teal-300">
-                    Cart
-                  </span>
-                </h1>
-                {cartItems.length > 0 && (
-                  <button
-                    className="cursor-pointer  hiddentext-red-500 hover:text-red-700"
-                    onClick={() => clearCart()}
-                  >
-                    <Trash />
-                  </button>
-                )}
+                  {cartItems.length > 0 && (
+                    <button
+                      onClick={() => clearCart()}
+                      className="ml-4 mt-2 flex h-10 w-10 shrink-0 cursor-pointer items-center justify-center rounded-full text-red-500 transition hover:bg-red-500/10 hover:text-red-700"
+                    >
+                      <Trash className="h-5 w-5" />
+                    </button>
+                  )}
+                </div>
+
                 <div className="mt-6 sm:mt-8 w-full md:gap-6 lg:flex lg:items-start xl:gap-40">
                   <div className=" flex-none lg:max-w-2xl xl:max-w-4xl">
                     <div className="space-y-6">
@@ -101,22 +106,35 @@ export default function Cart() {
                         cartItems.map(({ product, quantity }) => (
                           <div
                             key={product?.id}
-                            className="rounded-lg border border-gray-200 bg-white/100 shadow-sm dark:border-gray-700 dark:bg-gray-800 md:p-6"
+                            className="rounded-lg bg-white/100 shadow-sm dark:bg-gray-800 p-4 sm:p-5 md:p-6"
                           >
-                            <div className="space-y-4 md:flex md:items-center md:justify-between md:gap-6 md:space-y-0">
-                              <img
-                                className="h-20 w-20 rounded-lg object-cover md:h-32 md:w-32"
-                                src={product?.image}
-                                alt={product?.name}
-                              />
-                              <div className="flex items-center justify-between md:order-3 md:justify-end">
+                            <div className="flex flex-col gap-4 sm:flex-row sm:items-start md:items-center md:justify-between md:gap-6">
+                              <div className="flex flex-row gap-4 sm:flex-row sm:items-start md:items-center md:justify-between md:gap-6">
+                                <img
+                                  className="h-24 w-24 shrink-0 rounded-lg object-cover sm:h-28 sm:w-28 md:h-32 md:w-32"
+                                  src={product?.image}
+                                  alt={product?.name}
+                                />
+                                <div className="w-full min-w-0 flex-1 space-y-3 sm:space-y-4 md:order-2 md:max-w-md">
+                                  <h3 className="truncate text-base font-semibold text-gray-900 dark:text-white sm:text-lg">
+                                    {product?.name}
+                                  </h3>
+                                  <p className="text-sm text-gray-500 dark:text-gray-400 sm:text-base">
+                                    Color: {product?.color}
+                                  </p>
+                                </div>
+                              </div>
+                              <div className="flex flex-col ml-1 sm:ml-6  w-full items-left space-y-2 justify-between sm:w-auto sm:gap-6 md:order-3 md:justify-end">
+                                <div className="text-left sm:text-center">
+                                  <p>Qty : </p>
+                                </div>
                                 <div className="flex items-center">
                                   <button
                                     type="button"
                                     onClick={() =>
                                       removeOneItem(product?.id ?? 0)
                                     }
-                                    className="inline-flex h-5 w-5 shrink-0 items-center justify-center rounded-md border border-gray-300 bg-gray-100 hover:bg-gray-200"
+                                    className="cursor-pointer inline-flex h-5 w-5 shrink-0 items-center justify-center rounded-md  bg-gray-100 hover:bg-gray-200 dark:text-black "
                                   >
                                     −
                                   </button>
@@ -131,36 +149,27 @@ export default function Cart() {
                                   <button
                                     type="button"
                                     onClick={() => addItem(product?.id ?? 0)}
-                                    className="inline-flex h-5 w-5 shrink-0 items-center justify-center rounded-md border border-gray-300 bg-gray-100 hover:bg-gray-200"
+                                    className="cursor-pointer inline-flex h-5 w-5 shrink-0 items-center justify-center rounded-md border border-gray-300 bg-gray-100 hover:bg-gray-200 dark:text-black"
                                   >
                                     +
                                   </button>
                                 </div>
 
-                                <div className="text-end md:order-4 md:w-32">
-                                  <p className="text-base font-bold text-gray-900 dark:text-white">
-                                    ₹{(product?.price ?? 0).toFixed(2)}
-                                  </p>
-                                </div>
-                              </div>
-                              <div className="w-full min-w-0 flex-1 space-y-4 md:order-2 md:max-w-md">
-                                <h3 className="text-base font-medium text-gray-900 dark:text-white">
-                                  {product?.name}
-                                </h3>
-
-                                <p className="text-sm text-gray-500 dark:text-gray-400">
-                                  Color : {product?.color}
-                                </p>
-
                                 <div className="flex items-center gap-4">
                                   <button
                                     type="button"
-                                    className="cursor-pointer flex items-center gap-2 rounded-full border border-red-500/20 bg-red-500/10 px-4 py-1 text-base font-semibold text-red-700 shadow-[0_4px_24px_rgba(0,0,0,0.1)] backdrop-blur-md transition-all duration-300 hover:scale-105 hover:bg-red-500/20 active:scale-95 dark:border-red-500/30 dark:bg-red-500/20 dark:text-red-400 dark:hover:bg-red-500/30"
+                                    className="cursor-pointer flex items-center gap-2 rounded-full border border-red-500/20 bg-red-500/10 px-4 py-2 text-sm font-semibold text-red-700 shadow-[0_4px_24px_rgba(0,0,0,0.1)] backdrop-blur-md transition-all duration-300 hover:scale-105 hover:bg-red-500/20 active:scale-95 dark:border-red-500/30 dark:bg-red-500/20 dark:text-red-400 dark:hover:bg-red-500/30"
                                     onClick={() => removeItem(product?.id ?? 0)}
                                   >
                                     Remove
                                   </button>
                                 </div>
+                              </div>
+
+                              <div className="text-end md:order-4 md:w-32">
+                                <p className="text-base font-bold text-gray-900 dark:text-white">
+                                  ₹{(product?.price ?? 0).toFixed(2)}
+                                </p>
                               </div>
                             </div>
                           </div>

@@ -1,7 +1,7 @@
 import { useContext, useState, type MouseEvent } from "react";
-import {useNavigate } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 import { motion, useMotionTemplate, useMotionValue } from "framer-motion";
-import {  ShoppingBag } from "lucide-react";
+import { ShoppingBag } from "lucide-react";
 import Header1 from "./ui/header-1";
 import { AuthContext } from "../context/AuthContext";
 
@@ -32,7 +32,7 @@ export default function Login() {
 
   return (
     <div
-      className="relative min-h-screen w-full bg-gradient-to-br from-indigo-50 via-white to-emerald-50 dark:from-zinc-950 dark:via-zinc-900 dark:to-emerald-950 font-sans text-zinc-900 dark:text-zinc-50 antialiased overflow-x-hidden group"
+      className="overflow-y-hidden relative min-h-screen w-full bg-gradient-to-br from-indigo-50 via-white to-emerald-50 dark:from-zinc-950 dark:via-zinc-900 dark:to-emerald-950 font-sans text-zinc-900 dark:text-zinc-50 antialiased overflow-x-hidden group"
       onMouseMove={handleMouseMove}
     >
       <motion.div
@@ -60,9 +60,11 @@ export default function Login() {
           >
             <div className="w-full max-w-lg  m-auto my-10">
               <div className="text-3xl font-bold tracking-tight text-gray-900 dark:text-white flex h-16 items-center justify-center gap-3 lg:h-20">
-                <span className="text-4xl">Sign in to </span>
-                <div className="flex ml-3 mr-[-5px] h-10 w-10 items-center justify-center rounded bg-black dark:bg-white text-white dark:text-black">
-                  <ShoppingBag className="h-7 w-7" />
+                <span className="text-2xl sm:text-3xl lg:text-4xl whitespace-nowrap">
+                  Sign in to
+                </span>
+                <div className="flex sm:ml-3  mr-[-5px] h-10 w-10 items-center justify-center rounded bg-black dark:bg-white text-white dark:text-black">
+                  <ShoppingBag className="h-6 w-6  sm:h-7 sm:w-7" />
                 </div>
                 <span className="text-3xl font-bold tracking-tight text-gray-900 dark:text-white">
                   VergeStore
@@ -74,13 +76,13 @@ export default function Login() {
               >
                 <div className="mb-4">
                   <label
-                    className="block text-gray-700 text-sm font-bold mb-2"
+                    className="block text-gray-700 dark:text-gray-300 text-sm font-bold mb-2"
                     id="username"
                   >
                     Username
                   </label>
                   <input
-                    className="shadow-sm appearance-none backdrop-blur-lg border border-white/20 rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
+                    className="shadow-sm appearance-none backdrop-blur-lg border border-white/20 rounded w-full py-2 px-3 text-gray-700 dark:text-gray-300 leading-tight focus:outline-none focus:shadow-outline"
                     id="username"
                     type="text"
                     placeholder="Username"
@@ -90,13 +92,13 @@ export default function Login() {
                 </div>
                 <div className="mb-6">
                   <label
-                    className="block text-gray-700 text-sm font-bold mb-2"
+                    className="block text-gray-700 dark:text-gray-300 text-sm font-bold mb-2"
                     id="password"
                   >
                     Password
                   </label>
                   <input
-                    className="shadow-sm appearance-none border border-white/20 rounded w-full py-2 px-3 text-gray-700 mb-3 leading-tight focus:outline-none focus:shadow-outline"
+                    className="shadow-sm appearance-none border border-white/20 rounded w-full py-2 px-3 text-gray-700 dark:text-gray-300 mb-3 leading-tight focus:outline-none focus:shadow-outline"
                     id="password"
                     type="password"
                     placeholder="Password"
@@ -107,7 +109,7 @@ export default function Login() {
                     Please choose a password.
                   </p>
                 </div>
-                <div className="flex items-center justify-between block text-gray-700 text-sm font-bold mb-2">
+                <div className="flex items-center justify-between block text-gray-700 dark:text-gray-300 text-sm font-bold mb-2">
                   <button
                     className="bg-white/10 backdrop-blur-lg border border-white/20 rounded-2xl shadow  hover:text-emerald-600 cursor-pointer text-grey-700 font-bold py-2 px-4 focus:outline-none focus:shadow-outline"
                     type="submit"
@@ -115,7 +117,7 @@ export default function Login() {
                     Sign In
                   </button>
                   <a
-                    className="block text-gray-700 text-sm font-bold mb-2 hover:text-emerald-600"
+                    className="block text-gray-700 dark:text-gray-300 text-sm font-bold mb-2 hover:text-emerald-600"
                     href="#"
                   >
                     Forgot Password?
