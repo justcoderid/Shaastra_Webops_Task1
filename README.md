@@ -33,3 +33,5 @@ VergeStore is a modern, high-performance e-commerce platform built with React, T
 
 3. Open `http://localhost:5173` to view it in the browser.
 
+4. Open deployed app `https://shaastra-webops-task1-irsvz8w14-my-team-06c9.vercel.app/` to view app
+
