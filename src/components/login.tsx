@@ -4,21 +4,39 @@ import { motion, useMotionTemplate, useMotionValue } from "framer-motion";
 import { ShoppingBag } from "lucide-react";
 import Header1 from "./ui/header-1";
 import { AuthContext } from "../context/AuthContext";
+import { useForm } from "react-hook-form";
 
 export default function Login() {
+  type FormData = {
+    username: string;
+    password: string;
+  };
   const mouseX = useMotionValue(0);
   const mouseY = useMotionValue(0);
   const navigate = useNavigate();
-  const [username, setUsername] = useState("");
-  const [password, setPassword] = useState("");
-  const { authenticateUser } = useContext(AuthContext);
-  function handleLogin(e: React.FormEvent<HTMLFormElement>) {
-    e.preventDefault();
-    alert(`Logged in as ${username}`);
-    console.log("Username:", username);
-    console.log("Password:", password);
-    authenticateUser(username);
+  const {
+    register,
+    handleSubmit,
+    formState: { errors },
+  } = useForm<FormData>();
+  const [mode, setMode] = useState("login");
+  const [enter, setEnter] = useState(false);
+  const { signUpUser, logInUser, loginError } = useContext(AuthContext);
+  function Enter(enter: boolean) {
+    setEnter(enter);
+    setTimeout(() => setEnter(!enter), 3000);
+  }
+  function handlesignUp(data: FormData) {
+    alert(`Logged in as ${data.username}`);
+    console.log("Username:", data.username);
+    console.log("Password:", data.password);
+    signUpUser(data.username, data.password);
     navigate("/");
+  }
+  function handleLogin(data: FormData) {
+    console.log("Username:", data.username);
+    console.log("Password:", data.password);
+    logInUser(data.username, data.password);
   }
   function handleMouseMove({
     currentTarget,
@@ -61,7 +79,7 @@ export default function Login() {
             <div className="w-full max-w-lg  m-auto my-10">
               <div className="text-3xl font-bold tracking-tight text-gray-900 dark:text-white flex h-16 items-center justify-center gap-3 lg:h-20">
                 <span className="text-2xl sm:text-3xl lg:text-4xl whitespace-nowrap">
-                  Sign in to
+                  Sign {mode === "login" ? "In" : "Up"} to
                 </span>
                 <div className="flex sm:ml-3  mr-[-5px] h-10 w-10 items-center justify-center rounded bg-black dark:bg-white text-white dark:text-black">
                   <ShoppingBag className="h-6 w-6  sm:h-7 sm:w-7" />
@@ -71,7 +89,9 @@ export default function Login() {
                 </span>
               </div>
               <form
-                onSubmit={handleLogin}
+                onSubmit={handleSubmit(
+                  mode === "login" ? handleLogin : handlesignUp,
+                )}
                 className="bg-white/10 backdrop-blur-lg border border-white/20 rounded-2xl shadow-xl p-6 px-8 "
               >
                 <div className="mb-4">
@@ -79,50 +99,112 @@ export default function Login() {
                     className="block text-gray-700 dark:text-gray-300 text-sm font-bold mb-2"
                     id="username"
                   >
-                    Username
+                    {mode === "login" ? "" : "Set"} Username
                   </label>
                   <input
                     className="shadow-sm appearance-none backdrop-blur-lg border border-white/20 rounded w-full py-2 px-3 text-gray-700 dark:text-gray-300 leading-tight focus:outline-none focus:shadow-outline"
                     id="username"
                     type="text"
                     placeholder="Username"
-                    value={username}
-                    onChange={(e) => setUsername(e.target.value)}
+                    {...register("username", {
+                      required: "Username is required",
+                      minLength: {
+                        value: 4,
+                        message: "username should be more than 4 characters",
+                      },
+                      maxLength: {
+                        value: 16,
+                        message: "username should be less than 16 characters",
+                      },
+                    })}
                   />
+                  {errors.username && enter && (
+                    <p className="mt-1 text-left text-xs text-red-500">
+                      {errors.username.message}
+                    </p>
+                  )}
                 </div>
                 <div className="mb-6">
                   <label
                     className="block text-gray-700 dark:text-gray-300 text-sm font-bold mb-2"
                     id="password"
                   >
-                    Password
+                    {mode === "login" ? "" : "Set"} Password
                   </label>
                   <input
                     className="shadow-sm appearance-none border border-white/20 rounded w-full py-2 px-3 text-gray-700 dark:text-gray-300 mb-3 leading-tight focus:outline-none focus:shadow-outline"
                     id="password"
                     type="password"
                     placeholder="Password"
-                    value={password}
-                    onChange={(e) => setPassword(e.target.value)}
+                    {...register("password", {
+                      required: "password is required",
+                      minLength: {
+                        value: 4,
+                        message: "password should be more than 4 characters",
+                      },
+                      maxLength: {
+                        value: 16,
+                        message: "password should be less than 16 characters",
+                      },
+                    })}
                   />
-                  <p className="text-red-500 text-xs italic hidden">
-                    Please choose a password.
-                  </p>
+                  {errors.password && enter && (
+                    <p className="mt-1 text-left text-xs text-red-500">
+                      {errors.password.message}
+                    </p>
+                  )}{loginError && (
+                    <p className="mt-3 text-sm text-red-500">{loginError}</p>
+                  )}
                 </div>
                 <div className="flex items-center justify-between block text-gray-700 dark:text-gray-300 text-sm font-bold mb-2">
-                  <button
-                    className="bg-white/10 backdrop-blur-lg border border-white/20 rounded-2xl shadow  hover:text-emerald-600 cursor-pointer text-grey-700 font-bold py-2 px-4 focus:outline-none focus:shadow-outline"
-                    type="submit"
-                  >
-                    Sign In
-                  </button>
-                  <a
-                    className="block text-gray-700 dark:text-gray-300 text-sm font-bold mb-2 hover:text-emerald-600"
-                    href="#"
-                  >
-                    Forgot Password?
-                  </a>
+                  
+                  {mode === "login" ? (
+                    <button
+                      className="bg-white/10 backdrop-blur-lg border border-white/20 rounded-2xl shadow  hover:text-emerald-600 cursor-pointer text-grey-700 font-bold py-2 px-4 focus:outline-none focus:shadow-outline"
+                      type="submit"
+                      onClick={() => Enter(true)}
+                    >
+                      Login
+                    </button>
+                  ) : (
+                    <button
+                      className="bg-white/10 backdrop-blur-lg border border-white/20 rounded-2xl shadow  hover:text-emerald-600 cursor-pointer text-grey-700 font-bold py-2 px-4 focus:outline-none focus:shadow-outline"
+                      type="submit"
+                      onClick={() => Enter(true)}
+                    >
+                      Sign Up
+                    </button>
+                  )}
+                  {mode === "login" && (
+                    <a
+                      className="block text-gray-700 dark:text-gray-300 text-sm font-bold mb-2 hover:text-emerald-600"
+                      href="#"
+                    >
+                      Forgot Password?
+                    </a>
+                  )}
                 </div>
+                {mode === "login" ? (
+                  <p className="text-gray-700 dark:text-gray-300 text-sm font-bold mb-2">
+                    Don't have an Account?{" "}
+                    <span
+                      onClick={() => setMode("SignUp")}
+                      className="cursor-pointer hover:text-emerald-600"
+                    >
+                      Sign Up
+                    </span>
+                  </p>
+                ) : (
+                  <p className="text-gray-700 dark:text-gray-300 text-sm font-bold mb-2">
+                    Already have an Account?{" "}
+                    <span
+                      onClick={() => setMode("login")}
+                      className="cursor-pointer hover:text-emerald-600"
+                    >
+                      Login
+                    </span>
+                  </p>
+                )}
               </form>
               <p className="text-center text-gray-500 text-xs mt-6">
                 &copy;2026 Shaastra team. All rights reserved.

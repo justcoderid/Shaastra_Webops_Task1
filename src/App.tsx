@@ -12,16 +12,54 @@ function App() {
     id: number;
     quantity: number;
   };
-  const [isLoggedIn, setIsLoggedIn] = useState(false);
-  const [username, setUsername] = useState("");
+  type User = {
+    username: string;
+    password: string;
+  };
+  const [isLoggedIn, setIsLoggedIn] = useState(
+    !!localStorage.getItem("currentUser"),
+  );
+  const [username, setUsername] = useState(
+    localStorage.getItem("currentUser") || "",
+  );
   const Navigate = useNavigate();
+  const [loginError, setLoginError] = useState("");
   const [cartItems, setCartItems] = useState<CartItem[]>([]);
-  function authenticateUser(Username: string) {
+  function signUpUser(Username: string, Password: string) {
+    const users: User[] = JSON.parse(localStorage.getItem("users") || "[]");
+    if (users.find((u) => u.username === username)) {
+      alert("Username already exist");
+      return;
+    }
+    const newUser: User = {
+      username: Username,
+      password: Password,
+    };
+    users.push(newUser);
+    localStorage.setItem("users", JSON.stringify(users));
+    localStorage.setItem("currentUser", Username);
     setUsername(Username);
     setIsLoggedIn(true);
   }
+  function logInUser(Username: string, Password: string) {
+    const users: User[] = JSON.parse(localStorage.getItem("users") || "[]");
+    const user = users.find(
+      (u) => u.username === Username && u.password === Password,
+    );
+    if (user) {
+      localStorage.setItem("currentUser", Username);
+      alert(`Logged in as ${Username}`);
+      setUsername(Username);
+      setIsLoggedIn(true);
+      Navigate("/");
+    } else {
+      setLoginError("username or password doesn't match, please try again");
+    }
+  }
   function logoutUser() {
     setIsLoggedIn(false);
+    localStorage.removeItem("currentUser");
+    setUsername("");
     console.log("logged out");
     alert("You have been logged out.");
   }
@@ -67,7 +105,7 @@ function App() {
   return (
     <>
       <AuthContext.Provider
-        value={{ username, isLoggedIn, authenticateUser, logoutUser }}
+        value={{ username, isLoggedIn, signUpUser, logInUser, logoutUser,loginError }}
       >
         <CartContext.Provider
           value={{
